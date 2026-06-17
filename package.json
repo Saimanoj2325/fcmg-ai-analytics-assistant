@@ -9,8 +9,8 @@
     "start": "node dist/server.cjs",
     "clean": "rm -rf dist server.js",
     "lint": "eslint src server.ts --ext .ts,.tsx",
-    "test": "tsx --test src/__tests__/**/*.test.ts",
-    "test:watch": "tsx --test --watch src/__tests__/**/*.test.ts"
+    "test": "tsx --test src/__tests__/syntheticData.test.ts",
+    "test:watch": "tsx --test --watch src/__tests__/syntheticData.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
