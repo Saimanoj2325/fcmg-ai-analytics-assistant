@@ -1,6 +1,6 @@
 # FMCG AI Analytics Assistant
 
-[![CI](https://github.com/Saimanoj2325/fcmg-ai-analytics-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Saimanoj2325/fcmg-ai-analytics-assistant/actions/workflows/ci.yml)
+[![CI](https://github.com/Saimanoj2325/fcmg-ai-analytics-assistant/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/Saimanoj2325/fcmg-ai-analytics-assistant/actions/workflows/ci.yml)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-blue.svg)](https://nodejs.org/)
 [![React Version](https://img.shields.io/badge/react-v19.0.0-blue.svg)](https://react.dev/)
 [![Gemini](https://img.shields.io/badge/GenAI-Gemini--2.5--Flash-orange.svg)](https://ai.google.dev/)
