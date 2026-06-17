@@ -44,6 +44,9 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    permissions:
+      contents: read
+      deployments: write
 
     steps:
       - name: Start GitHub Deployment
@@ -68,4 +71,3 @@ jobs:
           env: production
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: https://fcmg-ai-analytics-assistant.onrender.com # Replace with your actual Render URL
-
