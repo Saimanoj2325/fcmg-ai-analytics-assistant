@@ -38,3 +38,34 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+
+  deploy:
+    name: Deploy to Render
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    steps:
+      - name: Start GitHub Deployment
+        uses: bobheadxi/deployments@v1
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: production
+
+      - name: Trigger Render Deploy Hook
+        run: |
+          curl -s "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+      - name: Update GitHub Deployment Status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env: production
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: https://fcmg-ai-analytics-assistant.onrender.com # Replace with your actual Render URL
+
