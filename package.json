@@ -9,8 +9,8 @@
     "start": "node dist/server.cjs",
     "clean": "rm -rf dist server.js",
     "lint": "eslint src server.ts --ext .ts,.tsx",
-    "test": "node --experimental-strip-types --test src/__tests__/**/*.test.ts",
-    "test:watch": "node --experimental-strip-types --test --watch src/__tests__/**/*.test.ts"
+    "test": "tsx --test src/__tests__/**/*.test.ts",
+    "test:watch": "tsx --test --watch src/__tests__/**/*.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",
