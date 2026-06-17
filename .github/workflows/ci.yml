@@ -44,6 +44,9 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    permissions:
+      deployments: write
+      statuses: write
 
     steps:
       - name: Start GitHub Deployment
