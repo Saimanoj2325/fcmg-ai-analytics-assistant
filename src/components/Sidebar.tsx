@@ -1,5 +1,5 @@
-import React from 'react';
-import { LayoutDashboard, MessageSquare, ShoppingBag, Plus, Trash2, Sparkles, Loader2, Sliders } from 'lucide-react';
+import React, { useState } from 'react';
+import { LayoutDashboard, MessageSquare, ShoppingBag, Plus, Trash2, Sparkles, Loader2, Sliders, Key, Check } from 'lucide-react';
 import { Conversation } from '../types';
 
 interface SidebarProps {
@@ -23,6 +23,17 @@ export default function Sidebar({
   onDeleteConversation,
   isCreatingChat
 }: SidebarProps) {
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+
+  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.trim();
+    setApiKey(val);
+    if (val) {
+      localStorage.setItem('gemini_api_key', val);
+    } else {
+      localStorage.removeItem('gemini_api_key');
+    }
+  };
   return (
     <aside 
       className="w-68 bg-[#1e1b4b] text-slate-100 flex flex-col h-screen shrink-0 border-r border-[#2d2870] select-none"
@@ -161,6 +172,29 @@ export default function Sidebar({
             })
           )}
         </div>
+      </div>
+
+      {/* Gemini API Key Panel */}
+      <div className="px-4 py-3 border-t border-[#2d2870] bg-[#16143b]/70 space-y-2">
+        <div className="flex items-center justify-between text-[10px] font-semibold text-indigo-300 uppercase tracking-wider">
+          <div className="flex items-center gap-1.5">
+            <Key className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Custom Gemini Key</span>
+          </div>
+          {apiKey && <Check className="w-3 h-3 text-emerald-400" />}
+        </div>
+        <div className="relative">
+          <input
+            type="password"
+            value={apiKey}
+            onChange={handleApiKeyChange}
+            placeholder="Paste your API key..."
+            className="w-full bg-[#110f33] border border-[#2d2870] focus:border-indigo-500 rounded px-2.5 py-1.5 text-xs text-slate-100 placeholder-indigo-300/35 focus:outline-none transition-colors"
+          />
+        </div>
+        <p className="text-[9px] text-indigo-400/60 leading-relaxed">
+          Overrides server credentials. Stored locally.
+        </p>
       </div>
 
       {/* Workspace Context Footer */}

@@ -32,7 +32,18 @@ app.use(express.json());
 
 // Lazy-loaded Gemini Client config
 let aiClient: GoogleGenAI | null = null;
-function getGeminiClient() {
+function getGeminiClient(customApiKey?: string) {
+  if (customApiKey && customApiKey.trim() !== '') {
+    return new GoogleGenAI({
+      apiKey: customApiKey,
+      httpOptions: {
+        headers: {
+          'User-Agent': 'aistudio-build',
+        }
+      }
+    });
+  }
+
   if (!aiClient) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey || apiKey === 'MY_GEMINI_API_KEY' || apiKey.trim() === '') {
@@ -328,11 +339,12 @@ app.post('/api/conversations/:id/messages', async (req, res) => {
   res.write(`data: ${JSON.stringify({ type: 'user_message', message: userMsg })}\n\n`);
 
   // Try to load Gemini Client
-  const ai = getGeminiClient();
+  const customApiKey = req.headers['x-gemini-key'] as string | undefined;
+  const ai = getGeminiClient(customApiKey);
   if (!ai) {
-    const errorText = `**Notice**: Gemini API Key is missing. Please configure your API key in the secrets panel of Google AI Studio. 
-
-Until your API key is configured, you can browse preloaded records in the **Dashboard** and use **Product Explorer**, or browse pre-loaded demo chat screens!`;
+    const errorText = `**Notice**: Gemini API Key is missing or has run out of quota. 
+    
+Please provide your own **Gemini API Key** in the input field at the bottom of the sidebar to continue querying the assistant. Until a key is set, you can explore preloaded records on the **Dashboard**, browse the **Master Directories**, or run scenario comparisons in the **Promo Simulator**!`;
     const assistantMsg = addMessageToConversation(id, 'assistant', errorText);
     res.write(`data: ${JSON.stringify({ type: 'chunk', text: errorText })}\n\n`);
     res.write(`data: ${JSON.stringify({ type: 'done', message: assistantMsg })}\n\n`);

@@ -170,9 +170,15 @@ export default function App() {
     }));
 
     try {
+      const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+      const localKey = localStorage.getItem('gemini_api_key') || '';
+      if (localKey.trim() !== '') {
+        headers['X-Gemini-Key'] = localKey;
+      }
+
       const response = await fetch(`/api/conversations/${targetConvId}/messages`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
         body: JSON.stringify({ content: text })
       });
 
