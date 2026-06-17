@@ -25,6 +25,7 @@ import {
 } from './src/data/syntheticData.js';
 import { generateDatasetReportPDF } from './src/utils/pdfGenerator.js';
 
+// Initialize Express server
 const app = express();
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
