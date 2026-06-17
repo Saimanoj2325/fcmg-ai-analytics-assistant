@@ -43,13 +43,14 @@ jobs:
     name: Deploy to Render
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push' && secrets.RENDER_DEPLOY_HOOK != ''
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     permissions:
       deployments: write
       statuses: write
 
     steps:
       - name: Start GitHub Deployment
+        if: ${{ secrets.RENDER_DEPLOY_HOOK != '' }}
         uses: bobheadxi/deployments@v1
         id: deployment
         with:
@@ -58,12 +59,13 @@ jobs:
           env: production
 
       - name: Trigger Render Deploy Hook
+        if: ${{ secrets.RENDER_DEPLOY_HOOK != '' }}
         run: |
           curl -s "${{ secrets.RENDER_DEPLOY_HOOK }}"
 
       - name: Update GitHub Deployment Status
         uses: bobheadxi/deployments@v1
-        if: always()
+        if: always() && steps.deployment.outputs.deployment_id != ''
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
