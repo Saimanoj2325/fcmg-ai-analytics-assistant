@@ -1,0 +1,6 @@
+{
+  "name": "FMCG AI Analytics Assistant",
+  "description": "An AI-powered conversational analytics assistant for FMCG Beverage category managers, sales leads, and supply chain analysts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
