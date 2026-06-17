@@ -1,4 +1,4 @@
-import { Product, Store, SalesPromotion, Inventory, Conversation, Message, DashboardSummary } from '../types';
+import type { Product, Store, SalesPromotion, Inventory, Conversation, Message, DashboardSummary } from '../types.ts';
 
 // Deterministic Seeded Pseudo-Random Number Generator
 function createRandom(seed: number) {

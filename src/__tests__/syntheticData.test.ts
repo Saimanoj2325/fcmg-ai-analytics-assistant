@@ -10,7 +10,7 @@ import {
   query_regional_summary,
   query_product_performance,
   query_promo_impact,
-} from '../data/syntheticData.js';
+} from '../data/syntheticData.ts';
 
 // ─────────────────────────────────────────────
 // Master data integrity
